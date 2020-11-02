@@ -16,6 +16,49 @@ map.on('mousemove', function (e) {
         JSON.stringify(e.lngLat.wrap());
 });
 
-map.on('click', function(e) {
-    console.log(e.lngLat)
-})
+let points = [];
+
+map.on('click', function (e) {
+    var marker = new mapboxgl.Marker()
+        .setLngLat(e.lngLat)
+        .addTo(map);
+    points.push(marker)
+    lineCoordinates.push([e.lngLat.lng, e.lngLat.lat])
+    map.getSource("route").setData({
+        'type': 'Feature',
+        'properties': {},
+        'geometry': {
+            'type': 'LineString',
+            'coordinates': lineCoordinates
+        }
+    });
+});
+
+let lineCoordinates = []
+
+map.on('load', function () {
+    map.addSource('route', {
+        'type': 'geojson',
+        'data': {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': lineCoordinates
+            }
+        }
+    });
+    map.addLayer({
+        'id': 'route',
+        'type': 'line',
+        'source': 'route',
+        'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        'paint': {
+            'line-color': '#888',
+            'line-width': 8
+        }
+    });
+});
