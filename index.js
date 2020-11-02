@@ -92,11 +92,20 @@ function degDecimalMinToDecimal(deg, min) {
     return deg + (min / 60)
 }
 
+let open = false;
+
 function openUnitConverter() {
-    document.getElementById("unitConverter").style.display = ""
+    if(!open){
+        document.getElementById("unitConverter").style.display = "block";
+        open = true;
+    }else{
+        closeUnitConverter();
+    }
+
 }
 function closeUnitConverter() {
-    document.getElementById("unitConverter").style.display = "none"
+    document.getElementById("unitConverter").style.display = "none";
+    open = false;
 }
 
 function updateConversionsBasedOn(el) {
