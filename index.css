@@ -5,9 +5,13 @@
 
 #infoWrapper{
     position: absolute;
-    left: 0;
+    left: 1em;
     top: 0;
     max-width: 90vw;
     word-wrap: break-word;
     z-index: 999;
+}
+
+#infoWrapper > button{
+    padding: 0.5em;
 }
